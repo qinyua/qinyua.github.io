@@ -1,0 +1,204 @@
+ html,body{
+    height: 100%;
+	width:100%; 
+	position:absolute;
+	overflow: auto;
+	float:left;	
+	margin:auto;
+	
+}
+ a:hover{
+  background-color:aqua;
+  }
+  
+#rizhi{
+	
+	width:100%; 
+	border:1px solid blue;
+	
+	}
+#rizhi caption{
+	
+	border:1px solid blue;
+    background:aqua;	
+	
+}
+
+#rizhi thead{
+	
+	border:1px solid blue;
+    background:silver;	
+	
+}
+
+#rizhi tbody tr,td,th{
+	
+	border:1px solid black;
+    background:none;	
+	
+}
+
+
+#rizhi tfoot{
+	
+	border:1px solid blue;
+	background:none;
+	height:10px;
+  
+	
+}
+
+
+.colgroup1{
+	
+	background:none;
+/*	span:2;	 span写在这里是有问题的，他是不会生效的，受了网站手册的毒，认为可以*/
+	
+
+}
+
+
+#col1{
+	
+	background:none;
+	width:8%; 
+	}
+	
+#col2{
+	
+	background:none;
+	text-align:center;
+	width:20%; 	
+	
+}
+	
+#col3{
+	
+	background:none;
+	width:60%; 	
+}
+
+
+
+#btn{
+	
+background:aqua;
+height:20%;
+width:30%;
+
+	}
+
+#btn1{
+	
+background:green;
+height:20%;
+width:30%;
+
+	}	
+	
+#btn2{
+	
+background:yellow;
+height:20%;
+width:30%;
+
+	}
+	
+.navigator{
+	
+
+width:100%;
+background:none;	
+	
+	
+}
+	
+	
+#main{
+float:left;	
+border:0px solid red;
+display:inline;
+	
+} 
+#rightpage{
+	
+float:right;	
+border:0px solid blue;
+/*padding-top:0.5%;*/
+display:inline;	
+} 
+
+#liuyaninput{
+	
+float:left;		
+display:block;
+margin-top:1%;
+border:0px solid yellow;
+
+}
+
+#liuyandisp{
+float:left;	
+margin-bottom:2%;	
+
+border:0px solid red;
+
+}
+
+
+
+
+.foot{
+	
+float:left;		
+width:100%;
+text-align:center;
+border:1px solid none;
+background:aqua;
+vertical-align:top;
+	
+	
+}
+
+ .table1 table{
+	
+	float:left;
+	border-collapse:collapse;	
+	
+}
+
+.jiaa:hover{
+	
+	cursor:pointer;
+	
+}
+
+
+
+.plnc{
+float:left;	
+width:35%;
+display:inline-block;
+background-color:none;
+}
+
+.pllc{
+float:left;		
+width:auto;
+display:inline-block;		
+}
+
+
+.plrq{
+float:right;	
+width:auto;
+text-align:right;
+display:inline-block	
+}  
+
+.plnr{
+float:left;	
+width:auto;
+display:inline-block	
+} 
+

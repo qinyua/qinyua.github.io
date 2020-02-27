@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" type="text/css" href="rizhi.css">
+  <title>工作日志</title>
+  <script src="./Bmob-2.2.2.min.js"></script>
+  <script src="rizhi.js"></script>
+  <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
+  <style>
+ /*可以直接在这里写CSS样式，也可以直接去CSS样式文件里*/
+  </style>
+  
+</head>
+
+<body onload="inputclick()" onresize="resizechange()"> 
+
+<div class="navigator">
+
+	<a href="./index.html">
+
+	主页  
+	
+	</a>
+
+	<a href="./jstest.html">
+
+	javascript测试
+
+	</a>
+	
+	<a href="./rizhi.html">
+
+	日志+留言
+
+	</a>
+
+</div> 
+
+<hr/>
+
+<div id="main">
+
+<form name="addnewneirong"  method="get" style="" onsubmit="return validateForm()">
+<fieldset>
+<legend>提交工作日志</legend>
+<p><span style="color:red">*</span>为必填内容&nbsp;&nbsp;<span id="alter" style="color:black;"></span></p>
+</p>
+<p title="请输入日期"><span style="color:red">*</span>日期：<input type="date" id="date" name="date" required="required" onclick="clearstatus()" onchange="datechange(this)"></input></p>
+
+<p title="请输入内容" style="" ><span style="color:red">*</span>内容:
+<textarea id="gongzuoneirong"style="width:80%;height:90%;"  rows="5" name="neirong" required="required" placeholder="请将工作内容写在这里！">
+</textarea></p>
+
+
+
+<p title="请选择工作时长">时长：
+<select name="worktime" size="1"  >
+  <option value ="3hours">3hours</option>
+  <option value="5hours">5hours</option>
+  <option value="8hours">8hours</option>
+  <option value="10hours">10hours</option>
+  <option value="12hours">12hours</option>
+  <option value="15hours">15hours</option>
+</select>
+</p>
+
+<p title="请选择是否完成工作">
+<input type="radio" name="workdone" value="no" id="no"checked></input>
+<label for="no">未完成</label>
+&nbsp;&nbsp;
+
+<input type="radio" name="workdone" value="yes" id="yes"></input>
+<label for="yes">完成</label>
+</p>
+
+<p title="请选择工作类型">
+<input type="checkbox" name="worktype" value="python" > python</input>
+<input type="checkbox" name="worktype" value="html" > html</input>
+<input type="checkbox" name="worktype" value="css" > css</input>
+<input type="checkbox" name="worktype" value="javascript" >javascript</input>
+</p>
+
+
+
+<input type="button" value="新增内容"  id="btn" onclick="validateForm()" ></input>
+
+<input type="button" value="更新内容"  id="btn1" onclick="updateForm()" ></input>
+
+<input type="reset" value="清除内容"  id="btn2"></input>
+
+ </fieldset>
+</form></div>
+
+<div id="rightpage">
+<table id="rizhi" >
+<caption>工作日志</caption>
+    <col class="cols" id="col1" />
+    <col class="cols" id="col2"/>
+    <col class="cols" id="col3"/>
+    <colgroup class="colgroup1" ></colgroup>
+<thead>
+<th >序号</th>
+<th >
+<span class="jiaa" id="setUp" onclick="changepage(this)">/\</span>
+日期
+<span class="jiaa" id="setDn" onclick="changepage(this)">\/</span>
+</th>
+<th >内容</th>
+<th >备注</th>
+</thead>
+<tbody>
+<tr>
+<th>1</th>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+<tfoot style="text-align:center;font-weight:4;">
+<tr>
+<td colspan="2" >
+<p>当前页码</p>
+</td>
+<td colspan="2" id="yenumid">
+<span class="jiaa" id="pi1" onclick="changepage(this)">1&nbsp;</span>
+</td>
+</tr>
+<tr>
+<td colspan="2">
+<p>每页数量</p>
+</td>
+<td colspan="2">
+<span class="jiaa" id="pn5"  onclick="changepage(this)">5&nbsp</span>
+<span class="jiaa" id="pn10" onclick="changepage(this)">10&nbsp</span>
+<span class="jiaa" id="pn15" onclick="changepage(this)">15&nbsp</span>
+<span class="jiaa" id="pn20" onclick="changepage(this)">20&nbsp</span>
+</td>
+</tr>
+</tfoot>
+</table>
+</div>
+
+<div id="liuyaninput" >
+<p style="font-size:1.3em;font-weight:bold;text-align:center">评论一下吧</p>
+<div id='info' style="text-align:left;">
+<span>昵称</span>
+<input type="text" placeholder="xxx" id="nicheng" title="昵称" maxlength='20'></input>
+<span>邮箱</span>
+<input type="email" placeholder="xxx@xxx.com" id="youxiang" title="邮箱"></input>
+<span>其他</span>
+<input type="text" placeholder="anything" id="other" title="随意写"></input>
+<br><br>
+</div>
+
+<div>
+<textarea  rows="5" style="width:80%;height:90%;" id="liuyanneirong" title="请留言" placeholder="请留言" style="margin-left:10%;" ></textarea>
+
+<button type="button" style="background:aqua;color:blue;font-weight:600;font-size:1.2em;" onclick="tijiaoliuyan(this)">留言</button>
+<span id="alter"></span>
+<br><br>
+
+</div>
+
+</div>
+
+<div id = "liuyandisp">
+<p style="font-weight:bold;">评论列表
+<span class="jiaa" id="setPidUp" onclick="liuyandisplay(this)" title="先来后到显示">↑↑</span>
+&nbsp;&nbsp;
+<span class="jiaa" id="setPidDn" onclick="liuyandisplay(this)" title="后来居上显示">↓↓</span>
+</p>
+<div style="border-bottom:1px solid gray;float:left;" class="liuyan" >
+<p class="plnc">nicheng</p>
+<p class="pllc">1楼</p>
+<p class="plrq">2019-01-01 01:01:01</p>
+<p style="width:98%;" class="plnr">2019-01-01 01:01:012019-01-01 01:01:02019-01-01 01:01:012019-01-01 01:01:012019-01-01 012019-01-01 01:01:012019-01-01 01:01:012019-01-01 01:01:012019-01-01 01:01:012019-01-01 01:01:01:01:012019-01-01 01:01:0112019-01-01 01:01:01</p>
+<input type="button" value="回复" id="huifu1" title="回复" onclick="huifu(this)" style="position:relative;
+float:right;"></input>
+</div>
+</div>
+
+ 
+
+<div class="foot" >
+<p >当前页面访问量为<span id="readcount" style="font-size:bold;color:blue;" >0000</span>次</p>
+</div>
+ 
+ 
+<script>
+
+"use strict";
+
+
+
+</script>
+		
+
+	
+</body>
+</html>
