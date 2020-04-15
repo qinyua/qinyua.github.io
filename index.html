@@ -10,52 +10,20 @@
   <meta name="author" content="James Qin,qinyu1@126.com">
   <meta name="keyword" content="Prosoft,AB,Rockwell,系统集成,Arcomag">	
   <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?87ba29bf73432be07b8e68c5668ee65e";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-   
+  <script src="./tongji.js"></script>
+	<script src="./dist/js/mqtt.min.js"></script>
 </head>
 
 <body onload="alertfuntion(this)"> 
 
-
-	<a href="./index.html">
-
-	主页
-
-	</a>
-
-	<a href="./jstest.html">
-
-	javascript测试
-
-	</a>
-
-	<a href="./rizhi.html">
-
-	日志+留言
-
-	</a>
-	
-	<a href="./blog/index.html">
-
-	blog
-
-	</a>
-	
-	<a href="//github.com">
-        
-	github
-
-	</a>
-
+<div>
+	<a href="./index.html">主页</a>
+	<a href="./xuexiao.html">儿子上学</a>
+	<a href="./rizhi.html">日志+留言</a>	
+	<a href="./jstest.html">javascript测试</a>	
+	<a href="./blog/index.html">blog</a>	
+	<a href="//github.com">github</a>
+</div>
 
 <div id="needadd">
 
@@ -63,6 +31,9 @@ var _hmt = _hmt || [];
 <p id="p2">Hello world!</p>
 <p id="p3" > Hello world!</p>
 <p id="p4">Hello world!</p>
+
+
+
 <div 
 onmouseover="mOver(this)" 
 onmouseout="mOut(this)" 
@@ -96,6 +67,16 @@ style="background-color:#D94A38;width:200px;height:50px;padding-top:25px;text-al
 
   
 	<script>
+	 var client = mqtt.connect({ port: 61623, host: '192.168.1.9', keepalive: 10000,username:'admin',password:'password'});
+		client.subscribe('presence')
+		client.publish('presence', 'bin hier')
+		client.on('message', function (topic, message) {
+			console.log(message)
+			document.getElementById('p3').innerHTML=topic+" "+message
+		})
+		//client.end()
+	
+	
 	
 	function AddNewNode(){
 	

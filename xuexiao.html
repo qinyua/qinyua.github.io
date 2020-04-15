@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>儿子上学</title>
+	<meta name="description" content="本网页主要想记录儿子上幼儿园和小学的一些学校信息">
+	<meta name="author" content="James Qin,qinyu1@126.com">
+	<meta name="keyword" content="Prosoft,AB,Rockwell,系统集成,Arcomag">	
+	<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
+	<script src="./tongji.js"></script> 
+	<script type="text/javascript" src="http://api.map.baidu.com/getscript?v=3.0&ak=KU06srIpGs0RirWFt61pZp604ybyuTGe"></script>
+	<script src="./dist/js/jquery.min.js"></script>	
+	<script src="./dist/js/jquery.csv.js"></script>	
+	<script src="./ditu.js"></script>	
+	<script src="./dist/js/vue.min.js"></script>	
+	<script src="./dist/js/vue-router.js"></script>
+    <link rel="stylesheet" type="text/css" href="./dist/css/bootstrap.min.css" >
+	<script src="./dist/js/bootstrap.min.js"></script>
+	<script src="./dist/js/popper.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="./shangxue.css">
+</head>
+
+<body style="width:100%;" onload="readCsvToArr()"> 
+<ul class="nav nav-tabs ">
+	<li class="nav-item"><a  class="nav-link "  href="./index.html">主页</a></li>
+	<li class="nav-item"><a  class="nav-link active" href="./xuexiao.html">儿子上学</a></li>
+	<li class="nav-item"><a  class="nav-link " href="./rizhi.html">日志+留言</a></li>	
+	<li class="nav-item"><a  class="nav-link " href="./jstest.html">javascript测试</a></li>
+	<li class="nav-item"><a  class="nav-link " href="./blog/index.html">blog</a></li>	
+	<li class="nav-item"><a  class="nav-link " href="//github.com">github</a></li>
+</ul>
+
+<div id="app">
+  <p>
+    <!-- 使用 router-link 组件来导航. -->
+    <!-- 通过传入 `to` 属性指定链接. -->
+    <!-- <router-link> 默认会被渲染成一个 `<a>` 标签 -->
+	<ul class="nav nav-tabs ">
+   	<li class="nav-item"><router-link to="/puhui" class="nav-link" onclick="test3(this)">普惠幼儿园</router-link></li>
+   	<li class="nav-item"><router-link to="/pingji" class="nav-link" onclick="test3(this)" >评级幼儿园</router-link></li>
+	<li class="nav-item"><router-link to="/all" class="nav-link " onclick="test3(this)">全部幼儿园</router-link></li>
+	<li class="nav-item"><router-link to="/xiaoxue" class="nav-link " onclick="test3(this)">小学信息</router-link></li>
+	<li class="nav-item"><router-link to="/chuzhong" class="nav-link " onclick="test3(this)">初中信息</router-link></li>
+	<li class="nav-item"><router-link :to="{ name: 'user', params: {id: 123,post_id:12322}}" class="nav-link " onclick="test3(this)">高中信息</router-link></li>
+	<li class="nav-item"><router-link :to="{ name: 'duocengroute', params: {id: 123}}" class="nav-link " onclick="test3(this)">Go to duoceng</router-link></li>
+	</ul>
+ </p>
+  <!-- 路由出口 -->
+  <!-- 路由匹配到的组件将渲染在这里 -->
+  <router-view></router-view>
+ </div>
+
+<div id="table" class="col-lg-7" style="border:1px solid gray;float:left;">
+	<table  id="tb" class="table-hover  table-bordered" style="width:100%">
+	<caption>{{caption}}</caption>
+	<thead>
+	</thead>
+	<tbody>
+	</tbody>
+	</table>
+</div>
+<div id="map" class="col-lg-5"style="height:600px;border:#ccc solid 1px;font-size:12px;float:right;" ></div>
+
+</body>
+
+<script>
+// 0. 如果使用模块化机制编程，导入 Vue 和 VueRouter，要调用 Vue.use(VueRouter)
+ 
+// 1. 定义（路由）组件。
+// 可以从其他文件 import 进来
+
+//$(document).ready(function(){
+//	$.get("./includes/head.html",function(responseTxt,statusTxt,xhr){
+//	    alert("数据: " + responseTxt + "\n状态: " + statusTxt+xhr);
+//	});
+//});
+//var Footemp='<div><button id="btn1">普惠地图加载</button>'+
+//'<span>&nbsp;&nbsp;普惠幼儿园总计:20</span></div>'
+var Footemp='<div><button class="btn btn-primary" id="btn1" data-toggle="tooltip"  title="普惠幼儿园地图加载">普惠幼儿园地图显示</button><span>&nbsp;&nbsp;海淀普惠幼儿园总计:<span class="badge badge-primary">25</span></span></div>'
+var Footemp1='<div><button class="btn btn-success" id="btn2" data-toggle="tooltip"  title="评级幼儿园地图加载" >评级幼儿园地图显示</button><span>&nbsp;&nbsp;海淀评级幼儿园总计:<span class="badge badge-success">72</span></span></div>'
+var bartemp='<div><button class="btn btn-info" id="btn3" data-toggle="tooltip"  title="全部幼儿园地图加载">全部幼儿园地图显示</button><span>&nbsp;&nbsp;海淀全部幼儿园总计:  <span class="badge badge-pill badge-info">220</span></span></div>'
+const Foo = { template:Footemp}
+const Foo123 = { template:Footemp1}
+const Bar = { template: bartemp}
+
+const FooBar = { 
+template: '<div>'+
+'<button class="btn btn-danger" id="btnxiaoxue" data-toggle="tooltip"  title="小学信息地图加载">小学信息地图加载<span class="badge badge-light">New</span></button>'+
+'<div><label for="sel1">按照学区信息查询:</label>'+
+'<select class="form-control" id="sel1" >'+
+'</select></div>'+
+'<div><label for="sel2">按照海淀行政区划查询:</label>'+
+'<select class="form-control" id="sel2">'+
+'</select></div>'+
+'</div>' 
+}
+const FooBar1 = { 
+template: '<div><p>注：区域一：羊坊店学区、万寿路学区、永定路学区。</p>'+
+　　'<p>区域二：北太平庄学区、花园路学区、学院路学区。</p>'+
+　　'<p>区域三：中关村学区、海淀学区。</p>'+
+　　'<p>区域四：八里庄学区、紫竹院学区、四季青学区。</p>'+
+　　'<p>区域五：西三旗学区、清河学区、青龙桥学区、上地学区、上庄西北旺学区、温泉苏家坨学区。</p>'+
+'</div>' 
+}
+
+const User = {
+  template: '<div>'+
+  '  <p class="text-danger">想什么呢，高中即使有工作居住证高考都不能报考本科院校，咱们家娃怎么也得上博士呢呀！</p>'+
+  '  <p class="text-info">还是提前想好以后高中的道路吧！</p>'+
+  '<p class="text-secondary">params:{{ $route.params  }} User{{ $route.params.id  }} postid {{ $route.params.post_id}} query{{$route.query}} path{{$route.path}}fullPath{{$route.fullPath}}</p>  </div>'
+}
+const User1 = {
+  template: '<div class="user1">User {{ $route.params.id  }} postid {{ $route.params.post_id}} query{{$route.query}} path{{$route.path}} routename{{$route.name}}<router-view></router-view> </div>'
+}
+const UserProfile = {
+  template: '<div > <h2>UserProfile</h2>User {{ $route.params.id  }} postid {{ $route.params.post_id}} query{{$route.query}} path{{$route.path}}fullPath{{$route.fullPath}}  </div>'
+}
+const UserPosts = {
+  template: '<div > <h2>UserPosts</h2>User {{ $route.params.id  }} postid {{ $route.params.post_id}} query{{$route.query}} path{{$route.path}}fullPath{{$route.fullPath}}  </div>'
+}
+const UserHome = {
+  template: '<div > <h2>UserHome</h2>User {{ $route.params.id  }} postid {{ $route.params.post_id}} query{{$route.query}} path{{$route.path}}fullPath{{$route.fullPath}}  </div>'
+}
+
+// 2. 定义路由
+// 每个路由应该映射一个组件。 其中"component" 可以是
+// 通过 Vue.extend() 创建的组件构造器，
+// 或者，只是一个组件配置对象。
+// 我们晚点再讨论嵌套路由。
+const routes = [
+  { path: '/puhui', component: Foo,alias: '' },
+  { path: '/pingji', component: Foo123},
+  { path: '/all', component: Bar },
+  { path: '/xiaoxue', component: FooBar },
+  //可以创建别名，当访问别名时会直接访问对应的路径，而不用进行任何的提示
+  { path: '/chuzhong', component: FooBar1,alias: '/foobarbar' },
+  // 动态路径参数 以冒号开头
+  { path: '/user/:id/post/:post_id',name: 'user', component: User },
+  //多层路由也可以做
+  { path: '/user1/:id', 
+  	name:'duocengroute',
+    component: User1,
+	children: [
+        {
+          // 当 /user/:id/profile 匹配成功，
+          // UserProfile 会被渲染在 User 的 <router-view> 中
+          path: 'profile',
+          component: UserProfile
+        },
+        {
+          // 当 /user/:id/posts 匹配成功
+          // UserPosts 会被渲染在 User 的 <router-view> 中
+          path: 'posts',
+          component: UserPosts
+        },
+		// UserHome 会被渲染在 User 的 <router-view> 中
+        { path: '', component: UserHome },
+      ]  
+	  }
+  
+]
+ 
+// 3. 创建 router 实例，然后传 `routes` 配置
+// 你还可以传别的配置参数, 不过先这么简单着吧。
+const router = new VueRouter({
+ // routes // （缩写）相当于 routes: routes
+ routes: routes
+})
+ 
+// 4. 创建和挂载根实例。
+// 记得要通过 router 配置参数注入路由，
+// 从而让整个应用都有路由功能
+const app = new Vue({
+  router
+}).$mount('#app')
+ 
+// 现在，应用已经启动了！
+</script>
+
+
+<script>
+// 表格显示信息
+var tds=sourceStr;
+var vm = new Vue({
+        el: '#table',
+        data: {
+            tds: tds,
+            caption: "",
+            router:""
+        },
+        methods: {
+            details: function(qq) {			    
+                return  this.caption + qq;
+            }
+        }
+    })
+
+function test1(){
+router.push({ name: 'user', params: { id:'qinyu',post_id:12345 }, query: { plan: 'private' }})
+}
+function test2(){
+router.replace({ name: 'user', params: { id:'james',post_id:12345 }, query: { plan: 'private',qwe: '2314' }})
+}
+function test3(obj){
+//console.log(obj.innerHTML)
+// 存储
+sessionStorage.setItem("path", obj.innerHTML);
+//如果这样写程序的话reload之后所有的程序都消失了。
+location.reload();
+//alert(obj);
+//alert(sourceStr);
+//vm.details("qwe");
+}
+function readCsvToArr(){
+//alert("asdasd")
+var src1="./qq.csv"
+var objPathName=sessionStorage.getItem("path")
+switch (objPathName)
+{
+case "普惠幼儿园":src1="./puhui.csv";break;
+case "评级幼儿园":src1="./pingji.csv";break;
+case "全部幼儿园":src1="./haidian.csv";break;
+case "小学信息":src1="./xiaoxue.csv";break;
+case "初中信息":src1="./chuzhong.csv";break;
+default:src1="./qq.csv"
+}
+$.get(src1,function(responseTxt,statusTxt,xhr){
+      if(statusTxt=="success")
+        //alert("外部内容加载成功!");
+		sourceStr=responseTxt;
+		//console.log(sourceStr);
+		//alert(sourceStr)
+
+		$.csv.toArrays(sourceStr,function(err,data){
+			adds=data;
+			//console.log(adds)
+			//alert(adds);
+			i=0;
+			data2table();	
+		})
+      if(statusTxt=="error")
+        alert("Error: "+xhr.status+": "+xhr.statusText);
+	});
+}
+</script>
+
+<script type="text/javascript">
+    //创建和初始化地图函数：
+    function initMap(){
+      createMap();//创建地图
+      setMapEvent();//设置地图事件
+      addMapControl();//向地图添加控件
+      //addMapOverlay();//向地图添加覆盖物
+    }
+    function createMap(){ 
+      map = new BMap.Map("map"); 
+      map.centerAndZoom(new BMap.Point(116.409048,39.980823),12);
+    }
+    function setMapEvent(){
+      map.enableScrollWheelZoom();
+      map.enableKeyboard();
+      map.enableDragging();
+      map.enableDoubleClickZoom()
+    }
+    function addClickHandler(target,window){
+      target.addEventListener("click",function(){
+        target.openInfoWindow(window);
+      });
+    }
+    function addMapOverlay(){
+
+      for(var index = 0; index < markers.length; index++ ){
+        var point = new BMap.Point(markers[index].position.lng,markers[index].position.lat);
+        var marker = new BMap.Marker(point,{icon:new BMap.Icon("http://api.map.baidu.com/lbsapi/createmap/images/icon.png",new BMap.Size(20,25),{
+          imageOffset: new BMap.Size(markers[index].imageOffset.width,markers[index].imageOffset.height)
+        })});
+        var label = new BMap.Label(markers[index].title,{offset: new BMap.Size(25,5)});
+        var opts = {
+          width: 200,
+          title: markers[index].title,
+          enableMessage: false
+        };
+        var infoWindow = new BMap.InfoWindow(markers[index].content,opts);
+        marker.setLabel(label);
+        addClickHandler(marker,infoWindow);
+        map.addOverlay(marker);
+      };
+    }
+    //向地图添加控件
+    function addMapControl(){
+      var scaleControl = new BMap.ScaleControl({anchor:BMAP_ANCHOR_BOTTOM_LEFT});
+      scaleControl.setUnit(BMAP_UNIT_IMPERIAL);
+      map.addControl(scaleControl);
+      var navControl = new BMap.NavigationControl({anchor:BMAP_ANCHOR_TOP_LEFT,type:BMAP_NAVIGATION_CONTROL_LARGE});
+      map.addControl(navControl);
+      var overviewControl = new BMap.OverviewMapControl({anchor:BMAP_ANCHOR_BOTTOM_RIGHT,isOpen:true});
+      map.addControl(overviewControl);
+    }
+    var map;
+      initMap();
+  </script>
+</html>
