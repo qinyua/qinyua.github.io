@@ -1,0 +1,1 @@
+Bmob.initialize('e8704f0d7e639187', 'asdasd')

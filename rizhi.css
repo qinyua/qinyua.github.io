@@ -1,52 +1,18 @@
- html,body{
-    height: 100%;
+body{
 	width:100%; 
-	position:absolute;
-	overflow: auto;
-	float:left;	
-	margin:auto;
-	
+	height:100%; 
+	overflow-x:hidden;
+	margin-left:auto;
 }
+
  a:hover{
   background-color:aqua;
   }
   
 #rizhi{
-	
-	width:100%; 
-	border:1px solid blue;
-	
+/*	width:100%; */
+/*	border:1px solid blue;*/
 	}
-#rizhi caption{
-	
-	border:1px solid blue;
-    background:aqua;	
-	
-}
-
-#rizhi thead{
-	
-	border:1px solid blue;
-    background:silver;	
-	
-}
-
-#rizhi tbody tr,td,th{
-	
-	border:1px solid black;
-    background:none;	
-	
-}
-
-
-#rizhi tfoot{
-	
-	border:1px solid blue;
-	background:none;
-	height:10px;
-  
-	
-}
 
 
 .colgroup1{
@@ -54,7 +20,6 @@
 	background:none;
 /*	span:2;	 span写在这里是有问题的，他是不会生效的，受了网站手册的毒，认为可以*/
 	
-
 }
 
 
@@ -105,28 +70,24 @@ width:30%;
 	}
 	
 .navigator{
-	
-
 width:100%;
 background:none;	
-	
-	
-}
+	}
 	
 	
 #main{
-float:left;	
-border:0px solid red;
-display:inline;
-	
+border:1px solid silver;
+display:inline-block;
+margin:1em;
 } 
+
 #rightpage{
-	
-float:right;	
-border:0px solid blue;
+border:1px solid blue;
 /*padding-top:0.5%;*/
-display:inline;	
+display:inline-block;
+margin-left:1em;
 } 
+
 
 #liuyaninput{
 	
@@ -138,25 +99,31 @@ border:0px solid yellow;
 }
 
 #liuyandisp{
+display:block;	
 float:left;	
 margin-bottom:2%;	
-
 border:0px solid red;
+}
 
+.liuyan{
+display:block;	
+float:left;	
+border:0px solid red;	
+}
+.huifu1{
+display:block;	
+float:left;		
+border:1px solid red;		
 }
 
 
 
-
 .foot{
-	
 float:left;		
 width:100%;
 text-align:center;
 border:1px solid none;
-background:aqua;
-vertical-align:top;
-	
+padding-top:1em;
 	
 }
 
