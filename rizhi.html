@@ -8,36 +8,41 @@
   <title>工作日志</title>
   <meta name="description" content="这个网页主要是用于记录自己的学习日志和留言功能，目前还没有想好怎么利用呢！">
   <meta name="author" content="James Qin,qinyu1@126.com">
-  <meta name="keyword" content="Prosoft,AB,Rockwell,系统集成,Arcomag,留言,日志">	
+  <meta name="keywords" content="Prosoft,AB,Rockwell,系统集成,Arcomag,留言,日志">	
   <script src="./Bmob-2.2.2.min.js"></script>
   <script src="rizhi.js"></script>
   <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
   <style>
  /*可以直接在这里写CSS样式，也可以直接去CSS样式文件里*/
+
   </style>
+  <link rel="stylesheet" type="text/css" href="./dist/css/bootstrap.min.css" >
+  <link rel="stylesheet" type="text/css" href="./dist/css/font-awesome.min.css" >
+	<script src="./dist/js/jquery.min.js"></script>	
+	<script src="./dist/js/bootstrap.min.js"></script>
+	<script src="./dist/js/popper.min.js"></script>
   <script src="./tongji.js"></script>
 </head>
 
 <body onload="inputclick()" onresize="resizechange()"> 
-
-<div class="navigator">
-	<a href="./index.html">主页</a>
-	<a href="./xuexiao.html">儿子上学</a>
-	<a href="./rizhi.html">日志+留言</a>	
-	<a href="./jstest.html">javascript测试</a>	
-	<a href="./blog/index.html">blog</a>	
-	<a href="//github.com">github</a>
-</div> 
+<ul class="nav nav-tabs ">
+	<li class="nav-item"><a  class="nav-link "  href="./index.html">主页</a></li>
+	<li class="nav-item"><a  class="nav-link " href="./xuexiao.html">儿子上学</a></li>
+	<li class="nav-item"><a  class="nav-link active " href="./rizhi.html">日志+留言</a></li>	
+	<li class="nav-item"><a  class="nav-link " href="./jstest.html">javascript测试</a></li>
+	<li class="nav-item"><a  class="nav-link " href="./blog/index.html">blog</a></li>	
+	<li class="nav-item"><a  class="nav-link " href="//github.com">github</a></li>
+</ul>
 
 <hr/>
 
-<div id="main">
-
+<div class='row'>
+<div class='col-md-4 border border-primary rounded ml-4 mr-4'>
 <form name="addnewneirong"  method="get" style="" onsubmit="return validateForm()">
 <fieldset>
 <legend>提交工作日志</legend>
 <p><span style="color:red">*</span>为必填内容&nbsp;&nbsp;<span id="alter" style="color:black;"></span></p>
-</p>
+
 <p title="请输入日期"><span style="color:red">*</span>日期：<input type="date" id="date" name="date" required="required" onclick="clearstatus()" onchange="datechange(this)"></input></p>
 
 <p title="请输入内容" style="" ><span style="color:red">*</span>内容:
@@ -82,24 +87,37 @@
 <input type="reset" value="清除内容"  id="btn2"></input>
 
  </fieldset>
-</form></div>
+</form>
+</div>
 
-<div id="rightpage">
-<table id="rizhi" >
-<caption>工作日志</caption>
+<div class='col-md-7 border border-primary float-md-right ml-4 mr-4'>
+<table class="table table-bordered table-striped" id="rizhi" >
     <col class="cols" id="col1" />
     <col class="cols" id="col2"/>
     <col class="cols" id="col3"/>
     <colgroup class="colgroup1" ></colgroup>
 <thead>
-<th >序号</th>
+<tr>
+<span class="mt-1 mb-1"><label for='selectmonth'><i class="fa fa-calendar" aria-hidden="true"></i>选择月份</label></span>
+<input type="month"  class="btn btn-light mt-1 mb-1" onchange="selectdate(this)" id='selectmonth'></input>
+<span style="text-align:center;font-weight:900;margin-left:3em;">
+<i class="fa fa-newspaper-o" aria-hidden="true"></i>
+&nbsp;&nbsp;工作日志&nbsp;&nbsp;
+<i class="fa fa-star" aria-hidden="true" style="color:red;"></i>&nbsp;
+<i class="fa fa-star" aria-hidden="true" style="color:red;"></i>&nbsp;
+<i class="fa fa-trophy" aria-hidden="true" style="color:red;"></i>
+</span>
+</tr>
+<tr>
+<th >No.</th>
 <th >
-<span class="jiaa" id="setUp" onclick="changepage(this)">/\</span>
+<span class="jiaa" id="setUp" onclick="changepage(this)"><i class="fa fa-toggle-up fa-1x"></i></span>
 日期
-<span class="jiaa" id="setDn" onclick="changepage(this)">\/</span>
+<span class="jiaa" id="setDn" onclick="changepage(this)"><i class="fa fa-toggle-down fa-1x"></i></span>
 </th>
 <th >内容</th>
 <th >备注</th>
+</tr>
 </thead>
 <tbody>
 <tr>
@@ -123,70 +141,108 @@
 <p>每页数量</p>
 </td>
 <td colspan="2">
-<span class="jiaa" id="pn5"  onclick="changepage(this)">5&nbsp</span>
-<span class="jiaa" id="pn10" onclick="changepage(this)">10&nbsp</span>
-<span class="jiaa" id="pn15" onclick="changepage(this)">15&nbsp</span>
-<span class="jiaa" id="pn20" onclick="changepage(this)">20&nbsp</span>
+<span class="jiaa" id="pn5"  onclick="changepage(this)">5&nbsp;</span>
+<span class="jiaa" id="pn7" onclick="changepage(this)">7&nbsp;</span>
+<span class="jiaa" id="pn14" onclick="changepage(this)">14&nbsp;</span>
+<span class="jiaa" id="pn20" onclick="changepage(this)">20&nbsp;</span>
 </td>
 </tr>
 </tfoot>
 </table>
 </div>
 
-<div id="liuyaninput" >
-<p style="font-size:1.3em;font-weight:bold;text-align:center">评论一下吧</p>
-<div id='info' style="text-align:left;">
-<span>昵称</span>
-<input type="text" placeholder="xxx" id="nicheng" title="昵称" maxlength='20'></input>
-<span>邮箱</span>
-<input type="email" placeholder="xxx@xxx.com" id="youxiang" title="邮箱"></input>
-<span>其他</span>
-<input type="text" placeholder="anything" id="other" title="随意写"></input>
-<br><br>
 </div>
 
-<div>
-<textarea  rows="5" style="width:80%;height:90%;" id="liuyanneirong" title="请留言" placeholder="请留言" style="margin-left:10%;" ></textarea>
+<div id='main'></div>
+<div id='rightpage'></div>
 
-<button type="button" style="background:aqua;color:blue;font-weight:600;font-size:1.2em;" onclick="tijiaoliuyan(this)">留言</button>
-<span id="alter"></span>
-<br><br>
+<p style="font-size:1.3em;font-weight:bold;text-align:center"><i class="fa fa-university" aria-hidden="true"></i>&nbsp;留个言吧&nbsp;<i class="fa fa-tree" aria-hidden="true" style="color:green;"></i>&nbsp;<i class="fa fa-tree" aria-hidden="true" style="color:green;"></i><i class="fa fa-fort-awesome" aria-hidden="true"></i></p>
 
+<div id="liuyaninput" onclick="liulanclick(event)" class="mb-4" style="border:0px solid red;">
+<p id="alter1" style="color:black;"></p>
+<i class="fa fa-pencil-square-o fa-3x" aria-hidden="true"></i><textarea  rows="1" id="liuyanneirong"  onchange="liulaninput(this)" style="width:80%;height:90%;" title="请留言" placeholder="请留言大于五个字" style="margin-left:10%;" ></textarea>
+<div id='info1' style="text-align:left;display:none;">
+<span><i class="fa fa-user-circle" aria-hidden="true"></i>&nbsp;昵称&nbsp;</span>
+<input type="text" placeholder="xxx" id="nicheng" title="昵称" maxlength='20'></input>
+<span><i class="fa fa-envelope-open" aria-hidden="true"></i>&nbsp;邮箱&nbsp;</span>
+<input type="email" placeholder="xxx@xxx.com" id="youxiang" title="邮箱"></input>
+<span><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;其他&nbsp;</span>
+<input type="text" placeholder="anything" id="other" title="随意写"></input>
+<button type="button" title="留言内容请大于5个字" id='liulanbtn'class="btn btn-success" disabled onclick="tijiaoliuyan(this)">&nbsp;<i class="fa fa-book" aria-hidden="true"></i>&nbsp;留言</button>
 </div>
 
 </div>
 
 <div id = "liuyandisp">
-<p style="font-weight:bold;">评论列表
-<span class="jiaa" id="setPidUp" onclick="liuyandisplay(this)" title="先来后到显示">↑↑</span>
+<p style="font-weight:bold;font-size:1.3em;"><i class="fa fa-commenting fa-2x"  aria-hidden="true"></i>评论列表
+<span class="jiaa" id="setPidUp" onclick="liuyandisplay(this)" title="先来后到显示"><i class="fa fa-sort-amount-asc" aria-hidden="true"></i></span>
 &nbsp;&nbsp;
-<span class="jiaa" id="setPidDn" onclick="liuyandisplay(this)" title="后来居上显示">↓↓</span>
+<span class="jiaa" id="setPidDn" onclick="liuyandisplay(this)" title="后来居上显示"><i class="fa fa-sort-amount-desc" aria-hidden="true"></i></span>
 </p>
-<div style="border-bottom:1px solid gray;float:left;" class="liuyan" >
+<div style="border-bottom:1px solid gray;margin:10px auto;" class="liuyan">
 <p class="plnc">nicheng</p>
 <p class="pllc">1楼</p>
 <p class="plrq">2019-01-01 01:01:01</p>
-<p style="width:98%;" class="plnr">2019-01-01 01:01:012019-01-01 01:01:02019-01-01 01:01:012019-01-01 01:01:012019-01-01 012019-01-01 01:01:012019-01-01 01:01:012019-01-01 01:01:012019-01-01 01:01:012019-01-01 01:01:01:01:012019-01-01 01:01:0112019-01-01 01:01:01</p>
-<input type="button" value="回复" id="huifu1" title="回复" onclick="huifu(this)" style="position:relative;
-float:right;"></input>
+<p style="width:90%;" class="plnr">2019-01-01 01:01:012019-01-01 01:01:02019-01-01 01:01:012019-01-01 01:01:012019-01-01 012019-01-01 01:01:012019-01-01 01:01:012019-01-01 01:01:012019-01-01 01:01:012019-01-01 01:01:01:01:012019-01-01 01:01:0112019-01-01 01:01:01</p>
+<button type="button" id="huifu1" title="回复" class="btn-outline-success huifubtn" onclick="huifu(this,event)"  style="float:right;">回复</button>
 </div>
 </div>
 
  
 
-<div class="foot" >
-<p >当前页面访问量为<span id="readcount" style="font-size:bold;color:blue;" >0000</span>次</p>
+<div class="foot bg-info text-white">
+<p>当前页面访问量为<span id="readcount" style="font-size:900;font:1.5em;color:blue;" >0000</span>次</p>
 </div>
- 
  
 <script>
 
 "use strict";
+function liulanclick(e){
+//console.log(e)
+e.stopPropagation();//阻止事件冒泡
+document.getElementById('liuyanneirong').rows='5';
+document.getElementById('info1').style.display="block";
+}
+function liulaninput(obj){
+//alert(obj.value)
+//alert()
+if(obj.value.length>5){
+document.getElementById('liulanbtn').disabled='';
+document.getElementById('liulanbtn').title="嗯嗯，点击留言可以了！";
+//document.getElementById('liulanbtn').removeClass("btn-secondary").addClass('btn-success');
+}else{
+document.getElementById('liulanbtn').disabled='disabled';
+document.getElementById('liulanbtn').title="留言内容请大于5个字";
+//document.getElementById('liulanbtn').removeClass("btn-success").addClass('btn-secondary');
 
+}
 
+}
+
+//第二步：点击空白处div消失
+
+document.onclick = function () {
+
+//div.style.display = "none";
+document.getElementById('liuyanneirong').rows='1';
+document.getElementById('info1').style.display="none";
+var huifu1=document.getElementsByClassName('huifu1');
+//console.log(huifu1)
+for(var i=0;i<huifu1.length;i++){
+huifu1[i].style.display="none"
+}
+var huifubtn=document.getElementsByClassName('huifubtn');
+for(var i=0;i<huifubtn.length;i++){
+huifubtn[i].style.display="";
+}
+
+//alert('qq');
+}
+
+//第三步：点击自身div不消失
 
 </script>
-		
+
 
 	
 </body>
