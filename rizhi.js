@@ -1,12 +1,5 @@
 ﻿var tablename="Data"
-<<<<<<< HEAD
 var url="./cd.xml"
-=======
-Bmob.initialize('e8704f0d7e639187', 'asdasd')
-//var url="https://api2.bmob.cn/1/classes/"+ tablename
-var url="./cd.xml"
-//var titlearray=['createdAt','date','neirong','objectId','updatedAt']
->>>>>>> 069d3ce386c078e262aec450bc954ee83fb0794a
 titlearray=['createdAt','date','neirong','objectId']
 var pageArr=[5,7,14,20];
 var numPerPage=5,pageId=1;
@@ -16,12 +9,6 @@ var pgobjectId,pgCount,pgName="bmobPageCount";
 var pid=0,cid=0,page,goodct=0,badct=0,pidb=0,resc,mfloorarr;
 var pageName=findPageName();
 
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> 069d3ce386c078e262aec450bc954ee83fb0794a
 function requestAllDataFromBmob(){
 	
 	const query = Bmob.Query(tablename);
